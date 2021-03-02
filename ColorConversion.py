@@ -50,7 +50,7 @@ def hsl2rgb(h, s, l):
     """
     h = h % 360
 
-    c = (1 - abs(2 * l)) * s
+    c = (1 - abs(2 * l - 1)) * s
     x = c * (1 - abs((h / 60) % 2 - 1))
     m = l - c / 2
     if h >= 0 and h < 60:
@@ -167,13 +167,13 @@ def rgb2hsl(r, g, b):
 
     delta = c_max - c_min
 
-    lt = (c_max - c_min) / 2
+    lt = (c_max + c_min) / 2
 
     if delta == 0:
         s = 0
         h = 0
     else:
-        s = 1 - abs(2 * lt - 1)
+        s = delta / (1 - abs(2 * lt - 1))
         if c_max == r:
             h = 60 * (((g - b) / delta) % 6)
         if c_max == g:
